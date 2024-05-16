@@ -1,11 +1,12 @@
 package com.Aswat.entity;
 
+import com.Aswat.Dtos.PostDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name="post")
@@ -19,22 +20,31 @@ public class Post {
 
     @Column (length = 5000)
     private String content;
-    private String category;
+
 
     private  String postedBy;
 
 
     private Date date;
 
-    private int likeCount;
+    private boolean approved;
 
-    private  int viewCount;
+
+    private boolean posted;
+
+    @ManyToOne(fetch = FetchType.LAZY , optional = false)
+    @JoinColumn(name= "category_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+@JsonIgnore
+    private Category category;
+
 
 
 
     @Lob
-    @Column(length = 1000000)
-    private byte[] pic;
+    @Column(columnDefinition = "longblob")
+    private byte[] img;
+
     @Column(name = "pic_path")
     private String picPath;
 
@@ -48,6 +58,9 @@ public class Post {
     public void setId(Long id) {
         this.id = id;
     }
+
+
+
 
     public String getName() {
         return name;
@@ -83,31 +96,10 @@ public class Post {
         this.date = date;
     }
 
-    public int getLikeCount() {
-        return likeCount;
-    }
-
-    public void setLikeCount(int likeCount) {
-        this.likeCount = likeCount;
-    }
-
-    public int getViewCount() {
-        return viewCount;
-    }
-
-    public void setViewCount(int viewCount) {
-        this.viewCount = viewCount;
-    }
 
 
 
-    public String getCategory() {
-        return category;
-    }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
 
 
     public String getPicPath() {
@@ -118,11 +110,50 @@ public class Post {
         this.picPath = picPath;
     }
 
-    public byte[] getPic() {
-        return pic;
+    public byte[] getImg() {
+        return img;
     }
 
-    public void setPic(byte[] pic) {
-        this.pic = pic;
+    public void setImg(byte[] img) {
+        this.img = img;
+    }
+
+
+
+
+    public PostDTO getDto(){
+        PostDTO postDTO= new PostDTO();
+        postDTO.setId(id);
+        postDTO.setName(name);
+        postDTO.setContent(content);
+        postDTO.setPostedBy(postedBy);
+        postDTO.setDate(date);
+        postDTO.setCategoryId(category.getId());
+        postDTO.setByteImg(img);
+        return postDTO;
+    }
+
+    public Long getCategory() {
+        return category.getId();
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
+    }
+
+    public boolean isPosted() {
+        return posted;
+    }
+
+    public void setPosted(boolean posted) {
+        this.posted = posted;
     }
 }

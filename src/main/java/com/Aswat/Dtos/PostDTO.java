@@ -1,27 +1,28 @@
 package com.Aswat.Dtos;
 
-
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
-import java.util.List;
 
 public class PostDTO {
     private Long id;
-
     private String name;
     private String content;
-    private String category;
+
     private String postedBy;
-
     private Date date;
-    private int likeCount;
-    private int viewCount;
+    private byte[] byteImg;
+    private MultipartFile img;
+private Long CategoryId;
+
+    private boolean approved;
 
 
-    private byte[] pic;
-    private String picPath;
+    private boolean posted;
 
     // Getters and setters
+
+
 
 
     public Long getId() {
@@ -48,13 +49,7 @@ public class PostDTO {
         this.content = content;
     }
 
-    public String getCategory() {
-        return category;
-    }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
 
     public String getPostedBy() {
         return postedBy;
@@ -72,35 +67,43 @@ public class PostDTO {
         this.date = date;
     }
 
-    public int getLikeCount() {
-        return likeCount;
+    public byte[] getByteImg() {
+        return byteImg;
     }
 
-    public void setLikeCount(int likeCount) {
-        this.likeCount = likeCount;
+    public void setByteImg(byte[] byteImg) {
+        this.byteImg = byteImg;
     }
 
-    public int getViewCount() {
-        return viewCount;
+    public MultipartFile getImg() {
+        return img;
     }
 
-    public void setViewCount(int viewCount) {
-        this.viewCount = viewCount;
+    public void setImg(MultipartFile img) {
+        this.img = img;
     }
 
-    public String getPicPath() {
-        return picPath;
+    public Long getCategoryId() {
+        return CategoryId;
     }
 
-    public void setPicPath(String picPath) {
-        this.picPath = picPath;
+    public void setCategoryId(Long categoryId) {
+        CategoryId = categoryId;
     }
 
-    public byte[] getPic() {
-        return pic;
+    public boolean isApproved() {
+        return approved;
     }
 
-    public void setPic(byte[] pic) {
-        this.pic = pic;
+    public void setApproved(boolean approved) {
+        this.approved = approved;
+    }
+
+    public boolean isPosted() {
+        return posted;
+    }
+
+    public void setPosted(boolean posted) {
+        this.posted = posted;
     }
 }

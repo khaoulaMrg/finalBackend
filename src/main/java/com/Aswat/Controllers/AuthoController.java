@@ -24,8 +24,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/api/autho")
@@ -88,37 +92,4 @@ public class AuthoController {
     }
 
 
-    @Autowired
-    private FileStorageService fileStorageService;
-
-
-
-
-
-
-
-    @PostMapping("/create")
-    public ResponseEntity<PostDTO> createPost(@ModelAttribute PostDTO postDTO,
-                                              @RequestParam("file") MultipartFile file) {
-        try {
-            // Enregistrer le fichier dans le dossier d'uploads et récupérer le chemin
-            String picPath = fileStorageService.storeFile(file);
-
-            // Définir le chemin de l'image dans le DTO
-            postDTO.setPicPath(picPath);
-
-            // Créer le post à partir du DTO et du fichier téléchargé
-            PostDTO createdPostDTO = postService.createPost(postDTO, file);
-
-            // Retourner la réponse avec le post créé
-            return ResponseEntity.ok(createdPostDTO);
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
-
 }
-
-
-
