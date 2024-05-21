@@ -97,11 +97,6 @@ public class Post {
     }
 
 
-
-
-
-
-
     public String getPicPath() {
         return picPath;
     }
@@ -128,8 +123,11 @@ public class Post {
         postDTO.setContent(content);
         postDTO.setPostedBy(postedBy);
         postDTO.setDate(date);
-        postDTO.setCategoryId(category.getId());
-        postDTO.setByteImg(img);
+        if (category != null) {
+            postDTO.setCategoryId(category.getId());
+        }        postDTO.setByteImg(img);
+        postDTO.setApproved(approved);
+        postDTO.setPosted(posted);
         return postDTO;
     }
 
@@ -156,4 +154,10 @@ public class Post {
     public void setPosted(boolean posted) {
         this.posted = posted;
     }
+
+    public byte[] getByteImg() {
+        return new byte[0];
+    }
+
+
 }

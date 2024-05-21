@@ -5,6 +5,7 @@ import com.Aswat.entity.Category;
 import com.Aswat.reposistories.CategoryRepo;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -16,7 +17,7 @@ public class CategoryServiceImpl implements CategoryService{
     public CategoryServiceImpl(CategoryRepo categoryRepo) {
         this.categoryRepo = categoryRepo;
     }
-    public Category createCategory(CategoryDto categoryDto){
+    public Category createCategory(CategoryDto categoryDto) {
         Category category= new Category();
         category.setCategory(categoryDto.getCategory());
         return categoryRepo.save(category);

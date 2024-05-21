@@ -16,12 +16,25 @@ public interface PostService {
   List<PostDTO> getAllPosts();
 
 
+  PostDTO reapproveAndRepostPost(Long id) ;
+
+  List<PostDTO> getApprovedAndPostedPosts();
+
+  PostDTO markPostAsPosted(Long id);
+
+  PostDTO getApprovedPost(Long id);
+
+
+  PostDTO sendPost(Long id);
+
+  List<PostDTO> getAllCategoriesByTitle(String title);
 
 
 
+  PostDTO approvePost(Long id);
+
+  List<PostDTO> getPostedPosts();
 
 
-
-
-
+  List<PostDTO> getPostsByCategory(Long categoryId);
 }

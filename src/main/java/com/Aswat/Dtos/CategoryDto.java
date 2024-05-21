@@ -3,7 +3,7 @@ package com.Aswat.Dtos;
 public class CategoryDto {
     private Long id;
 
-    private String Category;
+    private String category;
 
     public Long getId() {
         return id;
@@ -14,10 +14,10 @@ public class CategoryDto {
     }
 
     public String getCategory() {
-        return Category;
+        return category;
     }
 
     public void setCategory(String category) {
-        Category = category;
+        this.category = category;
     }
 }

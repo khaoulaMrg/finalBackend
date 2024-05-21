@@ -14,7 +14,7 @@ import java.util.Locale;
 
 
 @RestController
-@RequestMapping("/api/autho")
+@RequestMapping("/api/customer")
 public class CategoryController {
     private final CategoryService categoryService;
 

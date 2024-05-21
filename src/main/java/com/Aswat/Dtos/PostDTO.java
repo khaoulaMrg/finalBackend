@@ -13,7 +13,7 @@ public class PostDTO {
     private Date date;
     private byte[] byteImg;
     private MultipartFile img;
-private Long CategoryId;
+private Long categoryId;
 
     private boolean approved;
 
@@ -84,11 +84,11 @@ private Long CategoryId;
     }
 
     public Long getCategoryId() {
-        return CategoryId;
+        return categoryId;
     }
 
     public void setCategoryId(Long categoryId) {
-        CategoryId = categoryId;
+        this.categoryId = categoryId;
     }
 
     public boolean isApproved() {
@@ -106,4 +106,6 @@ private Long CategoryId;
     public void setPosted(boolean posted) {
         this.posted = posted;
     }
+
+
 }
