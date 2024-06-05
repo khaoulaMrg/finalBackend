@@ -9,6 +9,7 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -63,4 +64,21 @@ public class AuthSrvImp implements AuthoSrv {
 
         return createdUserDto;
     }
+    @Override
+    public List<User> getAllUsers() {
+        return userRepo.findAll();
+    }
+
+    @Override
+    public boolean deleteUser(Long id) {
+        // Vérifier si l'utilisateur existe
+        if (userRepo.existsById(id)) {
+            // Supprimer l'utilisateur de la base de données
+            userRepo.deleteById(id);
+            return true; // Retourne true si la suppression réussit
+        } else {
+            return false; // Retourne false si l'utilisateur n'est pas trouvé
+        }
+    }
 }
+

@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -21,6 +22,11 @@ public class Post {
     @Column (length = 5000)
     private String content;
 
+    private LocalDateTime expirationDate;
+
+    @Lob
+    @Column(length = 10000) // You can specify the length if you want to restrict the size, or leave it as @Lob only.
+    private String text;
 
     private  String postedBy;
 
@@ -29,6 +35,7 @@ public class Post {
 
     private boolean approved;
 
+    private boolean archived;
 
     private boolean posted;
 
@@ -39,7 +46,11 @@ public class Post {
     private Category category;
 
 
-
+    @ManyToOne(fetch = FetchType.LAZY , optional = false)
+    @JoinColumn(name= "type_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+private Type type;
 
     @Lob
     @Column(columnDefinition = "longblob")
@@ -47,6 +58,8 @@ public class Post {
 
     @Column(name = "pic_path")
     private String picPath;
+
+
 
 
 
@@ -59,8 +72,13 @@ public class Post {
         this.id = id;
     }
 
+    public LocalDateTime getExpirationDate() {
+        return expirationDate;
+    }
 
-
+    public void setExpirationDate(LocalDateTime expirationDate) {
+        this.expirationDate = expirationDate;
+    }
 
     public String getName() {
         return name;
@@ -116,28 +134,59 @@ public class Post {
 
 
 
+    // ... code précédent ...
+
     public PostDTO getDto(){
-        PostDTO postDTO= new PostDTO();
+        PostDTO postDTO = new PostDTO();
         postDTO.setId(id);
         postDTO.setName(name);
         postDTO.setContent(content);
+        postDTO.setText(text);
         postDTO.setPostedBy(postedBy);
         postDTO.setDate(date);
+        postDTO.setExpirationDate(expirationDate); // Ajout de ce champ
+
         if (category != null) {
             postDTO.setCategoryId(category.getId());
-        }        postDTO.setByteImg(img);
+            postDTO.setCategoryName(category.getCategory()); // Ajoutez cette ligne
+        }
+        if (type != null) {
+            postDTO.setTypeId(type.getId());
+            postDTO.setTypeName(type.getType()); // Ajoutez cette ligne
+        }
+        postDTO.setByteImg(img);
         postDTO.setApproved(approved);
         postDTO.setPosted(posted);
         return postDTO;
     }
 
-    public Long getCategory() {
-        return category.getId();
+// ... code suivant ...
+
+
+    public Category getCategory() {
+        return category;
     }
 
     public void setCategory(Category category) {
         this.category = category;
     }
+
+    public Long getCategoryId() {
+        return category != null ? category.getId() : null;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public Long getTypeId() {
+        return type != null ? type.getId() : null;
+    }
+
 
     public boolean isApproved() {
         return approved;
@@ -158,6 +207,28 @@ public class Post {
     public byte[] getByteImg() {
         return new byte[0];
     }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public boolean isArchived() {
+        return archived;
+    }
+
+    public void setArchived(boolean archived) {
+        this.archived = archived;
+    }
+
+    public String getTypeName() {
+        return type != null ? type.getType() : null;
+
+    }
+
 
 
 }
